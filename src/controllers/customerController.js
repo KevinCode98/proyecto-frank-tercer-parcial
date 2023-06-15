@@ -106,6 +106,7 @@ controller.delete = (req, res) => {
 };
 
 controller.update = (req, res) => {
+  let existeUsuario = false;
   const rfid = req.params.rfid;
   req.getConnection((err, conn) => {
     conn.query(
@@ -125,7 +126,9 @@ controller.update = (req, res) => {
           conn.query(
             'INSERT INTO Historial set ?',
             [dataHistorial],
-            (err, historial) => {}
+            (err, historial) => {
+              existeUsuario = true;
+            }
           );
         }
       }
@@ -153,15 +156,14 @@ controller.update = (req, res) => {
           conn.query(
             'UPDATE  Empleados set activo = ? WHERE rfid = ?',
             [!empleado[0].activo, rfid],
-            (err, historial) => {
-              return res.send('Ok');
-            }
+            (err, historial) => {}
           );
         }
       }
     );
   });
-  return res.send('Error');
+  console.log('Existe: ' + existeUsuario);
+  return existeUsuario ? res.send('Ok') : res.send('Error');
 };
 
 module.exports = controller;
