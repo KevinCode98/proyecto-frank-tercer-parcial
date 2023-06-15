@@ -1,0 +1,30 @@
+<%- include('./partials/_header.ejs'); %>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Accion</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if(data) { %> <% for (let i = 0; i < data.length; i++){ %>
+          <tr>
+            <td><%= data[i].id %></td>
+            <td><%= data[i].nombre %></td>
+            <td><%= data[i].accion %></td>
+            <td><%= data[i].fecha %></td>
+          </tr>
+          <% } %> <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/_footer.ejs'); %>

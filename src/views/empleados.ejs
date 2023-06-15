@@ -1,0 +1,79 @@
+<%- include('./partials/_header.ejs'); %>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-7">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>RFID</th>
+            <th>Activo</th>
+            <th>Remover</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if(data) { %> <% for (let i = 0; i < data.length; i++){ %>
+          <tr>
+            <td><%= data[i].id %></td>
+            <td><%= data[i].nombre %></td>
+            <td><%= data[i].apellido %></td>
+            <td><%= data[i].rfid %></td>
+            <% if(data[i].activo == 0){ %>
+            <td>Desconectado</td>
+            <% } else{ %>
+            <td>Conectado</td>
+            <% } %>
+            <td>
+              <a href="/delete/<%= data[i].id%>" class="btn btn-danger"
+                >Eliminar</a
+              >
+            </td>
+          </tr>
+          <% } %> <% } %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-body">
+          <form action="/add" method="post">
+            <h4>Agregar nuevo Empleado:</h4>
+
+            <div class="form-group mt-2">
+              <input
+                type="text"
+                name="nombre"
+                placeholder="Nombre"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group mt-2">
+              <input
+                type="text"
+                name="apellido"
+                placeholder="Apellido"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group mt-2">
+              <input
+                type="text"
+                name="rfid"
+                placeholder="RFID"
+                class="form-control"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">
+              Guardar Empleado
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/_footer.ejs'); %>

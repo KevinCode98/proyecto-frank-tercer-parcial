@@ -1,0 +1,36 @@
+<%- include('./partials/_header.ejs'); %>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>RFID</th>
+            <th>Activo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if(data) { %> <% for (let i = 0; i < data.length; i++){ %>
+          <tr>
+            <td><%= data[i].id %></td>
+            <td><%= data[i].nombre %></td>
+            <td><%= data[i].apellido %></td>
+            <td><%= data[i].rfid %></td>
+            <% if(data[i].activo == 0){ %>
+            <td>Desconectado</td>
+            <% } else{ %>
+            <td>Conectado</td>
+            <% } %>
+          </tr>
+          <% } %> <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/_footer.ejs'); %>
