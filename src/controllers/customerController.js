@@ -112,7 +112,9 @@ controller.update = (req, res) => {
       'SELECT * FROM Empleados WHERE rfid = ?',
       [rfid],
       (err, empleado) => {
-        if (empleado) {
+        if (empleado.length === 0)
+          console.log('Empleado no encontrado con RFID: ' + rfid);
+        else {
           const dataHistorial = {
             id: empleado[0].id,
             nombre: empleado[0].nombre + ' ' + empleado[0].apellido,
@@ -135,26 +137,31 @@ controller.update = (req, res) => {
       'SELECT * FROM Empleados WHERE rfid = ?',
       [rfid],
       (err, empleado) => {
-        const dataHistorial = {
-          id: empleado[0].id,
-          nombre: empleado[0].nombre + ' ' + empleado[0].apellido,
-          accion: empleado[0].activo ? 'DESCONECTADO' : 'CONECTADO',
-          fecha: new Date(),
-        };
+        if (empleado.length === 0)
+          console.log('Empleado no encontrado con RFID: ' + rfid);
+        else {
+          const dataHistorial = {
+            id: empleado[0].id,
+            nombre: empleado[0].nombre + ' ' + empleado[0].apellido,
+            accion: empleado[0].activo ? 'DESCONECTADO' : 'CONECTADO',
+            fecha: new Date(),
+          };
 
-        console.log({ empleado, rfid });
-        console.log(!empleado[0].activo);
+          console.log({ empleado, rfid });
+          console.log(!empleado[0].activo);
 
-        conn.query(
-          'UPDATE  Empleados set activo = ? WHERE rfid = ?',
-          [!empleado[0].activo, rfid],
-          (err, historial) => {
-            return res.send('Ok');
-          }
-        );
+          conn.query(
+            'UPDATE  Empleados set activo = ? WHERE rfid = ?',
+            [!empleado[0].activo, rfid],
+            (err, historial) => {
+              return res.send('Ok');
+            }
+          );
+        }
       }
     );
   });
+  return res.send('Error');
 };
 
 module.exports = controller;
